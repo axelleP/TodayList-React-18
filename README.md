@@ -17,11 +17,7 @@ Architecture de base :
    - /app/lib : fonctions utilitaires / de récupération de données
 - /public : image, css, ...
 
-Exemples de composants inclus :    
-- Image
-- SideNav
-- Link
-
 ## Documentation :
 - React : https://fr.react.dev/
+   - composants inclus : https://nextjs.org/docs/app/api-reference/components
 - Next.js : https://nextjs.org/
