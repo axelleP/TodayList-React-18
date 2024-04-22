@@ -2,7 +2,7 @@ const task = [
     {
         id: 1,
         name: 'Jardiner',
-        amOrPm: 'Matin',
+        timeOfDay: 'Matin',
         isCompleted : false
     }
 ];
