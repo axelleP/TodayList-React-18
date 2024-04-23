@@ -17,6 +17,16 @@ Architecture de base :
    - app/page.tsx : page principale du site
    - /app/lib : fonctions utilitaires / de récupération de données
 - /public : image, css, ...
+- types de composants :
+   - serveur (par défaut) : sécurisé, rapide
+   - client : réactif, interactif. Ajouter `'use client'` en haut du fichier contenant le composant
+- selon le type de composant `console.log()` se voit dans le terminal ou dans le navigateur
+
+## Typescript
+- interface : définit la structure d'un objet. Elle peut contenir des propriétés et leurs types associés
+
+## React
+- extension navigateur "React Developer Tools" pour voir les composants clients
 
 ## Tailwind CSS
 - grid : organiser les blocs principaux de la page
