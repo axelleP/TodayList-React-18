@@ -17,6 +17,8 @@ Architecture de base :
    - app/page.tsx : page principale du site
    - /app/lib : fonctions utilitaires / de récupération de données
 - /public : image, css, ...
+     
+Info :     
 - types de composants :
    - serveur (par défaut) : sécurisé, rapide
    - client : réactif, interactif. Ajouter `'use client'` en haut du fichier contenant le composant
@@ -24,9 +26,17 @@ Architecture de base :
 
 ## Typescript
 - interface : définit la structure d'un objet. Elle peut contenir des propriétés et leurs types associés
+- le mot clé `type` : permet de typer des fonctions, des objets complexes, des types génériques. 
+   exemples : 
+      - `type SetFilterCompleted = (value: boolean) => void;`
+      - `type User = { id: number; name: string; };`
 
 ## React
 - extension navigateur "React Developer Tools" pour voir les composants clients
+- map : rendre une liste d'éléments. ex. : `<tbody>{ tasks.map((task) => <Row key={ task.id } task={ task }/>) }`
+- on peut rendre une prop facultative avec `?`. ex. : `setFilterTimeOfDay?`
+- hooks
+   - useState : donnée pouvant changée, ne pouvant pas être calculée, ne provenant pas d'une prop passé par le parent
 
 ## Tailwind CSS
 - grid : organiser les blocs principaux de la page

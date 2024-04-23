@@ -1,11 +1,29 @@
-import { Task } from '../../types/taskType';
+import { TaskType } from '../../types/taskType';
 import Row from './row';
 
 interface InfoProps {
-  tasks: Task[];//tableau de tâches
+  tasks: TaskType[];//tableau de tâches
+  filterStateTask: string,
+  filterTimeOfDay : string,
+  filterName : string
 }
 
-export default function Table({ tasks }: InfoProps) {
+export default function Table({ tasks, filterStateTask, filterTimeOfDay, filterName }: InfoProps) {
+  let tasksFiltered = [] as TaskType[];
+
+  tasks.forEach((task) => {
+    if (filterName != '' && !task.name.toLowerCase().includes(filterName.toLowerCase())) {
+      return;
+    }
+    if (filterStateTask != 'all' && task.stateTask != filterStateTask) {
+      return;
+    }
+    if (filterTimeOfDay != 'all' && task.timeOfDay != filterTimeOfDay) {
+      return;
+    }
+    tasksFiltered.push(task);
+  });
+
   return (
     <table className="columns-3 table-auto w-full p-5 text-left">
       <thead className="bg-slate-300 text-center">
@@ -16,7 +34,7 @@ export default function Table({ tasks }: InfoProps) {
           <th className="px-1 py-1">Supprimer</th>
         </tr>
       </thead>
-      <tbody>{ tasks.map((task) => <Row key={ task.id } task={ task }/>) }
+      <tbody>{ tasksFiltered.map((task) => <Row key={ task.id } task={ task }/>) }
       </tbody>
     </table>
   );

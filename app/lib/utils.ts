@@ -1,13 +1,27 @@
-import { TimeOfDay } from "../types/timeOfDayTypes";
+import { TimeOfDayType } from "../types/timeOfDayType";
+import { StateTaskType } from "../types/stateTaskType";
 
-export function getTimeOfDayText(timeOfDay: TimeOfDay): string {
+export function getTimeOfDayText(timeOfDay: TimeOfDayType): string {
     switch (timeOfDay) {
-        case TimeOfDay.All:
+        case TimeOfDayType.All:
             return '--';
-        case TimeOfDay.Am:
+        case TimeOfDayType.Am:
             return 'Matin';
-        case TimeOfDay.Pm:
+        case TimeOfDayType.Pm:
             return 'Après midi';
+        default:
+            return 'Erreur';
+    }
+};
+
+export function getStateTaskText(state: StateTaskType): string {
+    switch (state) {
+        case StateTaskType.All:
+            return '--';
+        case StateTaskType.Completed:
+            return 'Complétée';
+        case StateTaskType.NotCompleted:
+            return 'Non Complétée';
         default:
             return 'Erreur';
     }

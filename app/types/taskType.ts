@@ -1,8 +1,9 @@
-import { TimeOfDay } from "../types/timeOfDayTypes";
+import { TimeOfDayType } from "./timeOfDayType";
+import { StateTaskType } from "./stateTaskType";
 
-export interface Task {
+export interface TaskType {
     id: number;
     name: string;
-    timeOfDay: string | TimeOfDay;
-    isCompleted: boolean;
+    timeOfDay: TimeOfDayType;
+    stateTask: StateTaskType;
 }

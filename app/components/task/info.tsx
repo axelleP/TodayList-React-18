@@ -1,15 +1,16 @@
-import { Task } from '../../types/taskType';
+import { TaskType } from '../../types/taskType';
 
 interface InfoProps {
-  tasks: Task[];//tableau de tâches
+  tasks: TaskType[];//tableau de tâches
 }
 
 export default function Info({ tasks }: InfoProps) {
-  const nbTasks = Object.keys(tasks).length;
+  let nbTasks = 0;
   let nbTasksCompleted = 0;
 
   for (let task of Object.values(tasks)) {
-    if (task.isCompleted) {
+    nbTasks++;
+    if (task.stateTask == 'completed') {
       nbTasksCompleted++;
     }
   };
@@ -19,7 +20,7 @@ export default function Info({ tasks }: InfoProps) {
   return (
     <div className="flex space-x-10">
       <div>Total tâche(s) : { nbTasks } </div>
-      <div>{ Math.round(percentTasksCompleted) } % de tâches complétées</div>
+      <div>{ Math.floor(percentTasksCompleted) } % de tâches complétées</div>
     </div>
   );
 }
