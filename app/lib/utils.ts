@@ -9,6 +9,8 @@ export function getTimeOfDayText(timeOfDay: TimeOfDayType): string {
             return 'Matin';
         case TimeOfDayType.Pm:
             return 'Après midi';
+        case TimeOfDayType.Evening:
+            return 'Soir';
         default:
             return 'Erreur';
     }

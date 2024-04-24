@@ -4,18 +4,43 @@ import { getTimeOfDayText } from '../../lib/utils';
 
 interface InfoProps {
   task: TaskType,
+  isActiveUpdateForm: boolean,
+  onSetTempUpdatedTasks: (id: number, propertyName: string, value: string | TimeOfDayType) => void,
   onDeleteTask: (value: number) => void
 }
 
-export default function Row({ task, onDeleteTask }: InfoProps) {
+export default function Row({ task, isActiveUpdateForm, onSetTempUpdatedTasks, onDeleteTask }: InfoProps) {
   let timeOfDayEnum = task.timeOfDay as TimeOfDayType;
+  const timeOfDayTypes = Object.values(TimeOfDayType);
+
+  let readonlyName = task.name;
+  let editableName = <input type="text" name="name" value={ task.name } onChange={ (e) => onSetTempUpdatedTasks(task.id, e.target.name, e.target.value) } className="border pl-1"/>;
+
+  let readonlyTimeOfDay = getTimeOfDayText(timeOfDayEnum);
+  let editableTimeOfDay = <select name="timeOfDay" className="border" value={ task.timeOfDay } onChange={ (e) => handleChangeTimeOfDay(e) }>
+    { timeOfDayTypes.map((type) => <option key={type} value={ type }>{ getTimeOfDayText(type as TimeOfDayType) }</option>) }
+  </select>;
+
+  let readonlyCompletedBtn = <input type="checkbox" name="completed" checked={ task.state == 'completed' } readOnly className="cursor-not-allowed opacity-50"/>;
+  let editableCompletedBtn = <input type="checkbox" name="completed" checked={ task.state == 'completed' }/>;
+
+  let classNameDeleteBtn = "bg-rose-600 hover:bg-rose-700 active:bg-rose-800 rounded-sm text-white px-2";
+  if (isActiveUpdateForm) {
+    classNameDeleteBtn += " cursor-not-allowed opacity-50";
+  }
+  let readonlyDeleteBtn = <button type="submit" className={ classNameDeleteBtn }>x</button>;
+  let editableDeletedBtn = <button type="submit" className={ classNameDeleteBtn } onClick={ (e) => onDeleteTask(task.id) }>x</button>;
+
+  function handleChangeTimeOfDay(e) {
+    onSetTempUpdatedTasks(task.id, e.target.name, e.target.value);
+  }
 
   return (
     <tr className="bg-slate-100">
-      <td className="px-1 py-1">{ task.name }</td>
-      <td className="text-center">{ getTimeOfDayText(timeOfDayEnum) }</td>
-      <td className="text-center"><input type="checkbox" name="action-completed" checked={ task.state == 'completed' } readOnly/></td>
-      <td className="text-center"><button type="submit" className="bg-rose-600 hover:bg-rose-700 active:bg-rose-800 rounded-sm text-white px-2" onClick={ (e) => onDeleteTask(task.id) }>x</button></td>
+      <td className="px-1 py-1">{ isActiveUpdateForm ? editableName : readonlyName }</td>
+      <td className="text-center">{ isActiveUpdateForm ? editableTimeOfDay : readonlyTimeOfDay }</td>
+      <td className="text-center">{ isActiveUpdateForm ? editableCompletedBtn : readonlyCompletedBtn }</td>
+      <td className="text-center">{ isActiveUpdateForm ? readonlyDeleteBtn : editableDeletedBtn }</td>
     </tr>
   );
 }

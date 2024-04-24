@@ -1,5 +1,6 @@
 export enum TimeOfDayType {
     All = 'all',
     Am = 'am',
-    Pm = 'pm'
+    Pm = 'pm',
+    Evening = 'evening'
 }

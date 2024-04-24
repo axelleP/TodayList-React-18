@@ -20,7 +20,7 @@ export default function Info({ tasks }: InfoProps) {
   return (
     <div className="flex space-x-10">
       <div>Total tâche(s) : { nbTasks } </div>
-      <div>{ Math.floor(percentTasksCompleted) } % de tâches complétées</div>
+      <div>{ percentTasksCompleted ? Math.floor(percentTasksCompleted) : 0} % de tâches complétées</div>
     </div>
   );
 }
