@@ -1,20 +1,20 @@
 export const tasksData = [
     {
-        id: 1,
+        id: 0,
         name: 'Prendre soin de soi',
         timeOfDay: 'all',
-        stateTask : 'completed'
+        state : 'completed'
+    },
+    {
+        id: 1,
+        name: 'Jardiner',
+        timeOfDay: 'pm',
+        state : 'completed'
     },
     {
         id: 2,
-        name: 'Jardiner',
-        timeOfDay: 'pm',
-        stateTask : 'completed'
-    },
-    {
-        id: 3,
         name: 'Promener le chien',
         timeOfDay: 'am',
-        stateTask : 'notCompleted'
+        state : 'notCompleted'
     }
 ];

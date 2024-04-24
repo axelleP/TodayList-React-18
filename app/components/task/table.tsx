@@ -3,20 +3,20 @@ import Row from './row';
 
 interface InfoProps {
   tasks: TaskType[];//tableau de tâches
-  filterStateTask: string,
+  filterState: string,
   filterTimeOfDay : string,
   filterName : string,
   onDeleteTask: (value: number) => void
 }
 
-export default function Table({ tasks, filterStateTask, filterTimeOfDay, filterName, onDeleteTask }: InfoProps) {
+export default function Table({ tasks, filterState, filterTimeOfDay, filterName, onDeleteTask }: InfoProps) {
   let tasksFiltered = [] as TaskType[];
 
   tasks.forEach((task) => {
     if (!task.name.toLowerCase().includes(filterName.toLowerCase())) {
       return;
     }
-    if (filterStateTask != 'all' && task.stateTask != filterStateTask) {
+    if (filterState != 'all' && task.state != filterState) {
       return;
     }
     if (filterTimeOfDay != 'all' && task.timeOfDay != filterTimeOfDay) {

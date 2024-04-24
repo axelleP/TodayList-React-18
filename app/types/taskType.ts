@@ -1,9 +1,9 @@
 import { TimeOfDayType } from "./timeOfDayType";
-import { StateTaskType } from "./stateTaskType";
+import { StateType } from "./stateType";
 
 export interface TaskType {
     id: number;
     name: string;
     timeOfDay: TimeOfDayType;
-    stateTask: StateTaskType;
+    state: StateType;
 }

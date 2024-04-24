@@ -10,7 +10,7 @@ export default function Info({ tasks }: InfoProps) {
 
   for (let task of Object.values(tasks)) {
     nbTasks++;
-    if (task.stateTask == 'completed') {
+    if (task.state == 'completed') {
       nbTasksCompleted++;
     }
   };

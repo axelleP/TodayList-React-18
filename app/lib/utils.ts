@@ -1,5 +1,5 @@
 import { TimeOfDayType } from "../types/timeOfDayType";
-import { StateTaskType } from "../types/stateTaskType";
+import { StateType } from "../types/stateType";
 
 export function getTimeOfDayText(timeOfDay: TimeOfDayType): string {
     switch (timeOfDay) {
@@ -14,13 +14,13 @@ export function getTimeOfDayText(timeOfDay: TimeOfDayType): string {
     }
 };
 
-export function getStateTaskText(state: StateTaskType): string {
+export function getStateText(state: StateType): string {
     switch (state) {
-        case StateTaskType.All:
+        case StateType.All:
             return '--';
-        case StateTaskType.Completed:
+        case StateType.Completed:
             return 'Complétée';
-        case StateTaskType.NotCompleted:
+        case StateType.NotCompleted:
             return 'Non Complétée';
         default:
             return 'Erreur';
