@@ -36,7 +36,9 @@ Info :
 - map : rendre une liste d'éléments. ex. : `<tbody>{ tasks.map((task) => <Row key={ task.id } task={ task }/>) }`
 - on peut rendre une prop facultative avec `?`. ex. : `setFilterTimeOfDay?`
 - hooks
-   - useState : donnée pouvant changée, ne pouvant pas être calculée, ne provenant pas d'une prop passé par le parent
+   - useState : donnée pouvant changée, ne pouvant pas être calculée, ne provenant pas d'une prop passé par le parent. ex. : `const [filterName, setFilterName] = useState('');`
+      - l'apppel du modificateur (ex. setFilterName) doit se faire dans le composant possédant le useState et non dans ses composants enfants
+      - les objets et les tableaux doivent être modifiées en les remplaçant (nouvelle copie) et pas en les modifiant directement
 
 ## Tailwind CSS
 - grid : organiser les blocs principaux de la page

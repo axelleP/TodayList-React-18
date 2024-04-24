@@ -5,14 +5,15 @@ interface InfoProps {
   tasks: TaskType[];//tableau de tâches
   filterStateTask: string,
   filterTimeOfDay : string,
-  filterName : string
+  filterName : string,
+  onDeleteTask: (value: number) => void
 }
 
-export default function Table({ tasks, filterStateTask, filterTimeOfDay, filterName }: InfoProps) {
+export default function Table({ tasks, filterStateTask, filterTimeOfDay, filterName, onDeleteTask }: InfoProps) {
   let tasksFiltered = [] as TaskType[];
 
   tasks.forEach((task) => {
-    if (filterName != '' && !task.name.toLowerCase().includes(filterName.toLowerCase())) {
+    if (!task.name.toLowerCase().includes(filterName.toLowerCase())) {
       return;
     }
     if (filterStateTask != 'all' && task.stateTask != filterStateTask) {
@@ -34,7 +35,7 @@ export default function Table({ tasks, filterStateTask, filterTimeOfDay, filterN
           <th className="px-1 py-1">Supprimer</th>
         </tr>
       </thead>
-      <tbody>{ tasksFiltered.map((task) => <Row key={ task.id } task={ task }/>) }
+      <tbody>{ tasksFiltered.map((task) => <Row key={ task.id } task={ task } onDeleteTask={ onDeleteTask }/>) }
       </tbody>
     </table>
   );
