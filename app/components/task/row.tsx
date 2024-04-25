@@ -5,11 +5,13 @@ import { getTimeOfDayText } from '../../lib/utils';
 interface InfoProps {
   task: TaskType,
   isActiveUpdateForm: boolean,
+  selectedTasksIds: number[],
+  onClickCheckboxSelectTask: (id: number, checked: boolean) => void
   onSetTempUpdatedTasks: (id: number, propertyName: string, value: string | TimeOfDayType | boolean) => void,
   onDeleteTask: (value: number) => void
 }
 
-export default function Row({ task, isActiveUpdateForm, onSetTempUpdatedTasks, onDeleteTask }: InfoProps) {
+export default function Row({ task, isActiveUpdateForm, selectedTasksIds, onClickCheckboxSelectTask, onSetTempUpdatedTasks, onDeleteTask }: InfoProps) {
   let timeOfDayEnum = task.timeOfDay as TimeOfDayType;
   const timeOfDayTypes = Object.values(TimeOfDayType);
 
@@ -33,6 +35,7 @@ export default function Row({ task, isActiveUpdateForm, onSetTempUpdatedTasks, o
 
   return (
     <tr className="bg-slate-100">
+      { !isActiveUpdateForm ? <td className="text-center"><input type="checkbox" name="selectTask" checked={ selectedTasksIds.includes(task.id) } onChange={ (e) => onClickCheckboxSelectTask(task.id, e.target.checked) }/></td> : "" }
       <td className="px-1 py-1">{ isActiveUpdateForm ? editableName : readonlyName }</td>
       <td className="text-center">{ isActiveUpdateForm ? editableTimeOfDay : readonlyTimeOfDay }</td>
       <td className="text-center">{ isActiveUpdateForm ? editableCompletedBtn : readonlyCompletedBtn }</td>

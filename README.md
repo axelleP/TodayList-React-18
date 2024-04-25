@@ -43,6 +43,7 @@ Info :
       - l'appel du modificateur (ex. setFilterName) doit se faire dans le composant possédant le useState et non dans ses composants enfants
       - lors de l'appel le modificateur peut recevoir en paramètre l'état actuel. ex. `setTempUpdatedTasks((prevTempTasks) => { ... }`
       - les objets et les tableaux doivent être modifiées en les remplaçant (nouvelle copie) et non en les modifiant directement
+   - useEffect : exécution du code une fois que le composant est monté ou lorsque certaines dépendances (données) changent
 
 ## Tailwind CSS
 Doc :      
