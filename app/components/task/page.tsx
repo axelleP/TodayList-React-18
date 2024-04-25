@@ -13,6 +13,7 @@ import Add from './add';
 import Table from './table';
 import UpdateAllButton from './update-all-button';
 import ValidateAllButton from './validate-all-button';
+import CancelButton from './cancel-button';
 import DeleteAllButton from './delete-all-button';
 
 export default function Page() {
@@ -25,7 +26,13 @@ export default function Page() {
   const tasksForTable = isActiveUpdateForm ? tempUpdatedTasks : tasks;
 
   function handleAddTask(name: string, timeOfDay: TimeOfDayType) {
-    let id = tasks.length ? tasks[tasks.length - 1].id + 1 : 0;
+    let id = 0;
+    if (tasks.length) {
+      const lastTask = tasks.reduce((accumulator, currentTask) => {
+        return currentTask.id > accumulator.id ? currentTask : accumulator
+      }) ;
+      id = lastTask.id + 1;
+    }
     let state = StateType.NotCompleted;
     let newTasks = [...tasks, { id, name, state, timeOfDay }];
     setTasks(newTasks);
@@ -37,7 +44,7 @@ export default function Page() {
   }
 
   //modification des tâches temporaires
-  function handleSetTempUpdatedTasks(id: number, propertyName: string, value: string | TimeOfDayType) {
+  function handleSetTempUpdatedTasks(id: number, propertyName: string, value: string | TimeOfDayType | boolean) {
     setTempUpdatedTasks((prevTempTasks) => {
       return prevTempTasks.map((task) =>
         task.id === id ? { ...task, [propertyName]: value } : task
@@ -51,10 +58,18 @@ export default function Page() {
     setIsActiveUpdateForm(!isActiveUpdateForm);
   }
 
+  function handleDeleteAllTasks() {
+    if (confirm("Confirmez-vous la suppression ?")) {
+      setTasks([] as TaskType[]);
+    }
+  }
+
   function handleDeleteTask(id: number) {
-    let newTasks = tasks.filter((task) => task.id !== id);
-    setTasks(newTasks);
-    setTempUpdatedTasks(newTasks);
+    if (confirm("Confirmez-vous la suppression ?")) {
+      let newTasks = tasks.filter((task) => task.id !== id);
+      setTasks(newTasks);
+      setTempUpdatedTasks(newTasks);
+    }
   }
 
   return (
@@ -62,7 +77,6 @@ export default function Page() {
       <Info tasks={ tasks }/>
       <Add isActiveUpdateForm={ isActiveUpdateForm } onAddTask={ handleAddTask }/>
       <Filters 
-        filterTimeOfDay={ filterTimeOfDay }
         onSetFilterState={ setFilterState } 
         onSetFilterTimeOfDay={ setFilterTimeOfDay }
         onSetFilterName={ setFilterName }
@@ -71,7 +85,9 @@ export default function Page() {
         ? isActiveUpdateForm ? <ValidateAllButton onSubmitUpdateForm={ handleSubmitUpdateForm } /> : <UpdateAllButton onActivateUpdateForm={ handleActivateUpdateForm }/> 
         : '' 
       }
-      <DeleteAllButton isActiveUpdateForm={ isActiveUpdateForm } onDeleteAllTasks={ () => setTasks([] as TaskType[]) }/>
+
+      { isActiveUpdateForm ? <CancelButton onActivateUpdateForm={ handleActivateUpdateForm }/> : <DeleteAllButton onDeleteAllTasks={ () => handleDeleteAllTasks() }/>}
+    
       <Table 
         tasks={ tasksForTable } 
         filterState={ filterState }

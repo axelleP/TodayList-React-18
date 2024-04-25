@@ -4,13 +4,12 @@ import { getTimeOfDayText } from '../../lib/utils';
 import { getStateText } from '../../lib/utils';
 
 interface InfoProps {
-  filterTimeOfDay : TimeOfDayType,
   onSetFilterState: (value: StateType) => void,
   onSetFilterTimeOfDay: (value: TimeOfDayType) => void,
   onSetFilterName: (value: string) => void
 }
 
-export default function Filters({ filterTimeOfDay, onSetFilterState, onSetFilterTimeOfDay, onSetFilterName }: InfoProps) {
+export default function Filters({ onSetFilterState, onSetFilterTimeOfDay, onSetFilterName }: InfoProps) {
   const stateTypes = Object.values(StateType);
   const timeOfDayTypes = Object.values(TimeOfDayType);
 
@@ -27,7 +26,7 @@ export default function Filters({ filterTimeOfDay, onSetFilterState, onSetFilter
 
       <div className="space-x-2">
         <label htmlFor="timeOfDay">Moment de la journée</label>
-        <select name="timeOfDay" className="border" value={ filterTimeOfDay } onChange={ (e) => onSetFilterTimeOfDay(e.target.value as TimeOfDayType)  }>
+        <select name="timeOfDay" className="border" onChange={ (e) => onSetFilterTimeOfDay(e.target.value as TimeOfDayType)  }>
           { timeOfDayTypes.map((type) => <option key={type} value={ type }>{ getTimeOfDayText(type as TimeOfDayType) }</option>) }
         </select>
       </div>

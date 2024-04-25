@@ -5,7 +5,7 @@ import { getTimeOfDayText } from '../../lib/utils';
 interface InfoProps {
   task: TaskType,
   isActiveUpdateForm: boolean,
-  onSetTempUpdatedTasks: (id: number, propertyName: string, value: string | TimeOfDayType) => void,
+  onSetTempUpdatedTasks: (id: number, propertyName: string, value: string | TimeOfDayType | boolean) => void,
   onDeleteTask: (value: number) => void
 }
 
@@ -14,15 +14,15 @@ export default function Row({ task, isActiveUpdateForm, onSetTempUpdatedTasks, o
   const timeOfDayTypes = Object.values(TimeOfDayType);
 
   let readonlyName = task.name;
-  let editableName = <input type="text" name="name" value={ task.name } onChange={ (e) => onSetTempUpdatedTasks(task.id, e.target.name, e.target.value) } className="border pl-1"/>;
+  let editableName = <input type="text" name="name" value={ task.name } onChange={ (e) => onSetTempUpdatedTasks(task.id, e.target.name, e.target.value) } className="border pl-1 w-full"/>;
 
   let readonlyTimeOfDay = getTimeOfDayText(timeOfDayEnum);
-  let editableTimeOfDay = <select name="timeOfDay" className="border" value={ task.timeOfDay } onChange={ (e) => handleChangeTimeOfDay(e) }>
+  let editableTimeOfDay = <select name="timeOfDay" className="border" value={ task.timeOfDay } onChange={ (e) => onSetTempUpdatedTasks(task.id, e.target.name, e.target.value) }>
     { timeOfDayTypes.map((type) => <option key={type} value={ type }>{ getTimeOfDayText(type as TimeOfDayType) }</option>) }
   </select>;
 
-  let readonlyCompletedBtn = <input type="checkbox" name="completed" checked={ task.state == 'completed' } readOnly className="cursor-not-allowed opacity-50"/>;
-  let editableCompletedBtn = <input type="checkbox" name="completed" checked={ task.state == 'completed' }/>;
+  let readonlyCompletedBtn = <input type="checkbox" name="state" checked={ task.state == 'completed' } readOnly className="cursor-not-allowed opacity-50"/>;
+  let editableCompletedBtn = <input type="checkbox" name="state" checked={ task.state == 'completed' } onChange={ (e) => onSetTempUpdatedTasks(task.id, e.target.name, e.target.checked ? "completed" : "notCompleted") }/>;
 
   let classNameDeleteBtn = "bg-rose-600 hover:bg-rose-700 active:bg-rose-800 rounded-sm text-white px-2";
   if (isActiveUpdateForm) {
@@ -30,10 +30,6 @@ export default function Row({ task, isActiveUpdateForm, onSetTempUpdatedTasks, o
   }
   let readonlyDeleteBtn = <button type="submit" className={ classNameDeleteBtn }>x</button>;
   let editableDeletedBtn = <button type="submit" className={ classNameDeleteBtn } onClick={ (e) => onDeleteTask(task.id) }>x</button>;
-
-  function handleChangeTimeOfDay(e) {
-    onSetTempUpdatedTasks(task.id, e.target.name, e.target.value);
-  }
 
   return (
     <tr className="bg-slate-100">

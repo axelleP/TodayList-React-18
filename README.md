@@ -1,4 +1,4 @@
-# <h1 align="center">Today list</h1>
+# <h1 align="center">🗒️Today list🗒️</h1>
 
 Site développé avec :      
 - Next.js 14.2.2
@@ -6,7 +6,7 @@ Site développé avec :
 - Tailwind CSS 3.4.1
 
 ## Installation et lancement
-- installer ou mettre à jour node sur la bonne version
+- installer ou mettre à jour node sur la bonne version (ici minimum 18.17)
 - créer son projet Next.js : `npx create-next-app@latest`
 - installer la bibliothèque next : `npm -g install next`
 - lancer le site : `npm run dev` puis aller sur http://localhost:3000
@@ -26,33 +26,39 @@ Info :
 
 ## Typescript
 - interface : définit la structure d'un objet. Elle peut contenir des propriétés et leurs types associés
-- le mot clé `type` : permet de typer des fonctions, des objets complexes, des types génériques. 
-   exemples : 
-      - `type SetFilterCompleted = (value: boolean) => void;`
+- mot clé `type` : permet de typer des fonctions, des objets complexes, des types génériques.     
+   exemples :       
+      - `type SetFilterCompleted = (value: boolean) => void;`       
       - `type User = { id: number; name: string; };`
 
 ## React
 - extension navigateur "React Developer Tools" pour voir les composants clients
-- map : rendre une liste d'éléments. ex. : `<tbody>{ tasks.map((task) => <Row key={ task.id } task={ task }/>) }`
+- map => comportement en fonction du return :
+   - rendu visuel pour un élément react. ex. : `<tbody>{ tasks.map((task) => <Row key={ task.id } task={ task }/>) }`
+   - transformation de données dans les autres cas. ex. : `tasks.map((task) => task.id === selectedId ? { ...task, name: newName } : task );`
 - on peut rendre une prop facultative avec `?`. ex. : `setFilterTimeOfDay?`
 - hooks
-   - useState : donnée pouvant changée, ne pouvant pas être calculée, ne provenant pas d'une prop passé par le parent. ex. : `const [filterName, setFilterName] = useState('');`
+   - useState : donnée pouvant changée, ne pouvant pas être calculée, ne provenant pas d'une prop passée par le parent. 
+      - exemple : `const [filterName, setFilterName] = useState('');`
       - l'appel du modificateur (ex. setFilterName) doit se faire dans le composant possédant le useState et non dans ses composants enfants
-      - le modificateur peut recevoir en paramètre l'état actuel. ex. `setTempUpdatedTasks((prevTempTasks) => { ... }`
-      - les objets et les tableaux doivent être modifiées en les remplaçant (nouvelle copie) et pas en les modifiant directement
+      - lors de l'appel le modificateur peut recevoir en paramètre l'état actuel. ex. `setTempUpdatedTasks((prevTempTasks) => { ... }`
+      - les objets et les tableaux doivent être modifiées en les remplaçant (nouvelle copie) et non en les modifiant directement
 
 ## Tailwind CSS
-- grid : organiser les blocs principaux de la page
-- flex : disposer des éléments de manière flexible
-- justify : centrer horizontalement les élements
-- align : centrer verticalement les élements
-- place : centrer horizontalement et verticalement les éléments
+Doc :      
+- section grid : organiser les blocs principaux de la page
+- section flex : disposer des éléments de manière flexible
+- section justify : centrer horizontalement les élements
+- section align : centrer verticalement les élements
+- section place : centrer horizontalement et verticalement les éléments
+
+Info :     
 - responsivité avec les breakpoints : sm, md, lg, xl, 2xl
    - exemples :
       - `md:my-10` => applique le margin y sur les interfaces d'une largeur minimale de 768px
       - `max-md:my-10` => applique le margin y sur les interfaces dont la largeur maximale est en dessous de 768px
 
-## Documentation :
+## Documentation
 - React : https://fr.react.dev/
    - concevoir : https://fr.react.dev/learn/thinking-in-react
    - composants inclus : https://nextjs.org/docs/app/api-reference/components
