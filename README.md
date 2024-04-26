@@ -5,6 +5,12 @@ Site développé avec :
 - React 18
 - Tailwind CSS 3.4.1
 
+</br>
+
+[Voir les images du site](#images-du-site)
+
+</br>
+
 ## Installation et lancement
 - installer ou mettre à jour node sur la bonne version (ici minimum 18.17)
 - créer son projet Next.js : `npx create-next-app@latest`
@@ -66,3 +72,12 @@ Info :
 - Next.js : https://nextjs.org/
 - Tailwind CSS : https://tailwindcss.com/
    - responsive design : https://tailwindcss.com/docs/responsive-design
+
+## Images du site
+### Affichage par défaut
+![image](https://github.com/axelleP/today-list/assets/3285758/ddbe64eb-ff5d-4eaf-8134-f79c6d1cac0e)       
+
+### Affichage en mode édition
+Clique sur le bouton "Modifier"  + filtre sur l'état "Non complétée".     
+
+![image](https://github.com/axelleP/today-list/assets/3285758/0d0e28c2-e124-4f88-9735-ad5bda8f923f)
