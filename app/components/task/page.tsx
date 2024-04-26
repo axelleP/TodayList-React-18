@@ -1,12 +1,6 @@
-'use client';
-
-import { useState } from 'react';
-
 import { TaskType } from '../../types/taskType';
-import { StateType } from '../../types/stateType';
-import { TimeOfDayType } from '../../types/timeOfDayType';
 
-import useTaskManager from './lib/useTaskManager';
+import useTaskManager from '../../lib/useTaskManager';
 
 import Info from './info';
 import Filters from './filters';
@@ -26,11 +20,17 @@ export default function Page({ initTasks } : InfoProps) {
   let taskManager = useTaskManager({initTasks});
   const {
     tasks,
-    tasksForTable,
+    tasksFilteredForTable,
     selectedTasksIds,
+    filterState,
+    filterTimeOfDay,
+    filterName,
     isActiveUpdateForm,
     isCheckedSelectAllTasks,
     handleAddTask,
+    setFilterState,
+    setFilterTimeOfDay,
+    setFilterName,
     handleActivateUpdateForm,
     handleClickCheckboxSelectAllTasks,
     handleClickCheckboxSelectTask,
@@ -41,15 +41,14 @@ export default function Page({ initTasks } : InfoProps) {
     handleDeleteTask,
   } = taskManager;
 
-  const [filterState, setFilterState] = useState(StateType.All);
-  const [filterTimeOfDay, setFilterTimeOfDay] = useState(TimeOfDayType.All);
-  const [filterName, setFilterName] = useState('');
-
   return (
     <div className="self-center sm:mx-auto md:my-10 shadow-lg shadow-indigo-50 p-6 bg-white md:rounded-lg space-y-8">
       <Info tasks={ tasks }/>
       <Add isActiveUpdateForm={ isActiveUpdateForm } onAddTask={ handleAddTask }/>
       <Filters 
+        filterState={ filterState }
+        filterTimeOfDay={ filterTimeOfDay }
+        filterName={ filterName }
         onSetFilterState={ setFilterState } 
         onSetFilterTimeOfDay={ setFilterTimeOfDay }
         onSetFilterName={ setFilterName }
@@ -68,10 +67,7 @@ export default function Page({ initTasks } : InfoProps) {
       }
 
       <Table 
-        tasks={ tasksForTable } 
-        filterState={ filterState }
-        filterTimeOfDay={ filterTimeOfDay }
-        filterName={ filterName }
+        tasks={ tasksFilteredForTable } 
         isActiveUpdateForm={ isActiveUpdateForm }
         isCheckedSelectAllTasks={ isCheckedSelectAllTasks }
         selectedTasksIds={ selectedTasksIds }

@@ -4,9 +4,6 @@ import Row from './row';
 
 interface InfoProps {
   tasks: TaskType[];//tableau de tâches
-  filterState: string,
-  filterTimeOfDay : string,
-  filterName : string,
   isActiveUpdateForm: boolean,
   isCheckedSelectAllTasks: boolean,
   selectedTasksIds: number[],
@@ -16,23 +13,7 @@ interface InfoProps {
   onDeleteTask: (value: number) => void
 }
 
-export default function Table({ tasks, filterState, filterTimeOfDay, filterName, isActiveUpdateForm, isCheckedSelectAllTasks, selectedTasksIds, onClickCheckboxSelectTask, onClickCheckboxSelectAllTasks, onSetTempUpdatedTasks, onDeleteTask }: InfoProps) {
-  let tasksFiltered = [] as TaskType[];
-  
-  //filtre les tâches
-  tasks.forEach((task) => {
-    if (!task.name.toLowerCase().includes(filterName.toLowerCase())) {
-      return;
-    }
-    if (filterState != 'all' && task.state != filterState) {
-      return;
-    }
-    if (filterTimeOfDay != 'all' && task.timeOfDay != filterTimeOfDay) {
-      return;
-    }
-    tasksFiltered.push(task);
-  });
-
+export default function Table({ tasks, isActiveUpdateForm, isCheckedSelectAllTasks, selectedTasksIds, onClickCheckboxSelectTask, onClickCheckboxSelectAllTasks, onSetTempUpdatedTasks, onDeleteTask }: InfoProps) {
   return (
     <table className="columns-3 table-auto w-full p-5 text-left">
       <thead className="bg-slate-300 text-center">
@@ -44,7 +25,7 @@ export default function Table({ tasks, filterState, filterTimeOfDay, filterName,
           <th className="px-1 py-1">Supprimer</th>
         </tr>
       </thead>
-      <tbody>{ tasksFiltered.map((task) => 
+      <tbody>{ tasks.map((task) => 
         <Row 
           key={ task.id } 
           task={ task } 

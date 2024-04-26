@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
-import { TaskType } from '../../../types/taskType';
-import { StateType } from '../../../types/stateType';
-import { TimeOfDayType } from '../../../types/timeOfDayType';
+import { TaskType } from '../types/taskType';
+import { StateType } from '../types/stateType';
+import { TimeOfDayType } from '../types/timeOfDayType';
 
 interface InfoProps {
     initTasks: TaskType[];//tableau de tâches
@@ -14,8 +14,27 @@ function useTaskManager({ initTasks } : InfoProps) {
     const [tempUpdatedTasks, setTempUpdatedTasks] = useState(tasks);
     const [isCheckedSelectAllTasks, setIsCheckedSelectAllTasks] = useState(false);
     const [selectedTasksIds, setSelectedTasksIds] = useState([] as number[]);
+    const [filterState, setFilterState] = useState(StateType.All);
+    const [filterTimeOfDay, setFilterTimeOfDay] = useState(TimeOfDayType.All);
+    const [filterName, setFilterName] = useState('');
 
     const tasksForTable = isActiveUpdateForm ? tempUpdatedTasks : tasks;
+
+    let tasksFilteredForTable = [] as TaskType[];
+  
+    //filtre les tâches
+    tasksForTable.forEach((task) => {
+        if (!task.name.toLowerCase().includes(filterName.toLowerCase())) {
+            return;
+        }
+        if (filterState != 'all' && task.state != filterState) {
+            return;
+        }
+        if (filterTimeOfDay != 'all' && task.timeOfDay != filterTimeOfDay) {
+            return;
+        }
+        tasksFilteredForTable.push(task);
+    });
 
     /**
      * Ajout d'une tâche
@@ -25,7 +44,7 @@ function useTaskManager({ initTasks } : InfoProps) {
         if (tasks.length) {
             const lastTask = tasks.reduce((accumulator, currentTask) => {
                 return currentTask.id > accumulator.id ? currentTask : accumulator
-            }) ;
+            });
             id = lastTask.id + 1;
         }
         let state = StateType.NotCompleted;
@@ -96,9 +115,9 @@ function useTaskManager({ initTasks } : InfoProps) {
      */
     function handleDeleteSelectedTasks() {
         if (confirm("Confirmez-vous la suppression ?")) {
-            let tasksToDelete = tasksForTable.filter((task) => !selectedTasksIds.includes(task.id));
-            setTasks(tasksToDelete);
-            setTempUpdatedTasks(tasksToDelete);
+            let tasksToKeep = tasksForTable.filter((task) => !selectedTasksIds.includes(task.id) || !tasksFilteredForTable.includes(task));
+            setTasks(tasksToKeep);
+            setTempUpdatedTasks(tasksToKeep);
             setIsCheckedSelectAllTasks(false);
             setSelectedTasksIds([]);
         }
@@ -109,7 +128,8 @@ function useTaskManager({ initTasks } : InfoProps) {
      */
     function handleDeleteAllTasks() {
         if (confirm("Confirmez-vous la suppression ?")) {
-            setTasks([] as TaskType[]);
+            let tasksToKeep = tasksForTable.filter((task) => !tasksFilteredForTable.includes(task));
+            setTasks(tasksToKeep);
         }
     }
 
@@ -126,11 +146,17 @@ function useTaskManager({ initTasks } : InfoProps) {
 
     return {
         tasks,
-        tasksForTable,
+        tasksFilteredForTable,
         selectedTasksIds,
+        filterState,
+        filterTimeOfDay,
+        filterName,
         isActiveUpdateForm,
         isCheckedSelectAllTasks,
         handleAddTask,
+        setFilterState,
+        setFilterTimeOfDay,
+        setFilterName,
         handleActivateUpdateForm,
         handleClickCheckboxSelectAllTasks,
         handleClickCheckboxSelectTask,
