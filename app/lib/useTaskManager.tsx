@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { TaskType } from '../types/taskType';
 import { StateType } from '../types/stateType';
@@ -19,6 +19,10 @@ function useTaskManager({ initTasks } : InfoProps) {
     const [filterName, setFilterName] = useState('');
 
     const tasksForTable = isActiveUpdateForm ? tempUpdatedTasks : tasks;
+
+    useEffect(() => {
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }, [tasks]);
 
     let tasksFilteredForTable = [] as TaskType[];
   

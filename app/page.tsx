@@ -9,10 +9,12 @@ import Page from './components/task/page';
 export default function Home() {
   const [initTasks, setInitTasks] = useState([] as TaskType[]);
 
+  //NOTE : utilisation de localStorage possible pour un site local, sinon c'est déconseillé de l'utiliser dans le cadre de saisie de données personnels
+
   //localStorage n'est accessible qu'après le montage du composant
   useEffect(() => {
     const tasksInStorage = localStorage.getItem('tasks');
-    if (tasksInStorage) {
+    if (tasksInStorage && tasksInStorage != "[]") {
       setInitTasks(JSON.parse(tasksInStorage));
     } else {
       setInitTasks(tasksData as TaskType[]);
